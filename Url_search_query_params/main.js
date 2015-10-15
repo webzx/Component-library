@@ -17,7 +17,7 @@
      * @returns {*} 返回参数value
      * @constructor
      */
-    function QueryString(key) {
+    function queryString(key) {
         var uri = decodeURIComponent(window.location.search),
             re = new RegExp("[\&\?]" + key + "\=([^\&]*)", "ig");
         return ((uri.match(re)) ? (uri.match(re)[0].substr(key.length + 2)) : null);
@@ -28,7 +28,7 @@
      * @returns {{}} 返回object键值对 例如:{a_name:a_value,b_name:b_name}
      * @constructor
      */
-    function QueryStrings () {
+    function queryStrings () {
         var uri = decodeURIComponent(window.location.search),
             re = /\w*\=([^\&]*)/ig,
             params = {},
@@ -41,7 +41,7 @@
     }
 
     return {
-        QueryString: QueryString,
-        QueryStrings:QueryStrings
+        queryString: queryString,
+        queryStrings:queryStrings
     }
 }));
