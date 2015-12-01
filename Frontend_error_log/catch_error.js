@@ -1,7 +1,5 @@
 /**
  * 文件说明：Javascript 的错误捕获，此代码应放在所有javascript代码的最前面
- * 创建日期：2015/9/21.
- * 创建人：jsonzhang
  * 备注：
  */
 
@@ -17,25 +15,28 @@ window.onerror = function (message, url, line, colum, errorObj) {
     msg += "errorType=Javascript";
 
     //客户端信息
-    msg += "&ua=" + window.navigator.userAgent;
+    msg += "&ua=" + encodeURIComponent(window.navigator.userAgent);
 
     //错误消息
-    msg += "&message=" + message;
+    msg += "&message=" + encodeURIComponent(message);
+
+    //出错js文件url
+    msg += "&url=" + encodeURIComponent(url);
 
     //出错页面url
-    msg += "&url=" + url;
+    msg += "&pageurl="+encodeURIComponent(window.location.href);
 
     //错误行数
     msg += "&line=" + line;
 
     //浏览器信息
-    msg += "&browser=" + clientInfo.getBrowserInfo();
+    msg += "&browser=" +encodeURIComponent(clientInfo.getBrowserInfo());
 
     //系统信息
-    msg += "&system=" + clientInfo.getOSInfo();
+    msg += "&system=" + encodeURIComponent(clientInfo.getOSInfo());
 
     //服务器地址
-    new Image().src = "/server.php?" + decodeURIComponent(msg);
+    new Image().src = "/server.php?" + msg;
 
     function clientInfo() {
         this.agent = navigator.userAgent.toLowerCase();
@@ -52,7 +53,7 @@ window.onerror = function (message, url, line, colum, errorObj) {
              * Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.7.1000 Chrome/30.0.1599.101 Safari/537.36 Maxthon
              * Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36 SE 2.X MetaSr 1.0  搜狗
              */
-            var regexp_IE = /msie [\d.]+/gi, //IE
+            var regexp_IE = /msie [\d.]+/gi, // IE6-10
                 regexp_FF = /firefox\/[\d.]+/gi, // Firefox
                 regexp_AppleWebKit = /applewebkit\/[\d.]+/gi, //AppleWebKit 内核
                 regexp_Chrome = /chrome\/[\d.]+/gi, //Chrome
@@ -60,12 +61,19 @@ window.onerror = function (message, url, line, colum, errorObj) {
                 regexp_Opera = /opr\/[\d.]+/gi; //Opera
 
             //IE
-            if (this.agent.indexOf("msie") > 0) {
-                var ie_info = this.agent.match(regexp_IE);
-                if (ie_info && ie_info.length) {
-                    return ie_info[0];
+            if("ActiveXObject" in window){
+                // IE6-10
+                if (this.agent.indexOf("msie") > 0) {
+                    var ie_info = this.agent.match(regexp_IE);
+                    if (ie_info && ie_info.length) {
+                        return ie_info[0];
+                    }
+                    return "MSIE未知版本;";
                 }
-                return "MSIE未知版本;";
+                // IE 11
+                if(!window.ActiveXObject){
+                    return "msie 11.0";
+                }
             }
 
             //Firefox

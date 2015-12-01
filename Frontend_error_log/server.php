@@ -1,6 +1,6 @@
 <?php
 /**
- * File Description:·þÎñÆ÷¶ËÊÕ¼¯JavascriptµÄ±¨´íÐÅÏ¢£¬Éú³Éµ½log.txtÖÐ
+ * File Description:æœåŠ¡å™¨ç«¯æ”¶é›†Javascriptçš„æŠ¥é”™ä¿¡æ¯ï¼Œç”Ÿæˆåˆ°log.txtä¸­
  * Date: 2015/10/11 2:46
  */
 
@@ -9,22 +9,23 @@ date_default_timezone_set('Asia/Shanghai');
 $date = date('Y-m-d H:i:s', time());
 
 /**
- * JavascriptµÄ±¨´íÐÅÏ¢
+ * Javascriptçš„æŠ¥é”™ä¿¡æ¯
  */
 if (isset($_GET['errorType']) && $_GET['errorType'] == "Javascript") {
     $errorType = $_GET['errorType'];
     $ua = $_GET['ua'];
     $message = $_GET['message'];
     $url = $_GET['url'];
+    $pageurl = $_GET['pageurl'];
     $line = $_GET['line'];
     $browser = $_GET['browser'];
     $system = $_GET['system'];
 
-    $error = $date . "----" . $errorType . " Error:" . $line . "ÐÐ----" . $message . "----" . $browser . "----" . $system . "----" . $url . "\r\n";
+    $error = $date . "----" . $errorType . " Error:" . $line . "è¡Œ----" .  $message . "----" . $browser . "----" . $system . "----å‡ºé”™æ–‡ä»¶ï¼š" . $url ."----å‡ºé”™é¡µé¢:". $pageurl."\r\n";
 }
 
 /**
- * ImagesµÄ±¨´íÐÅÏ¢
+ * Imagesçš„æŠ¥é”™ä¿¡æ¯
  */
 if (isset($_GET['errorType']) && $_GET['errorType'] == "Images") {
     $errorType = $_GET['errorType'];
